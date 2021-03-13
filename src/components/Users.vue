@@ -1,5 +1,8 @@
 <template>
   <div class="users">
+    <div>
+      <b-table v-if="users.length > 0" striped hover :items="users" />
+    </div>
     <b-modal id="modal-get-access-token" centered hide-footer hide-header no-close-on-esc no-close-on-backdrop>
       <h5>Enter the access token:</h5>
       <b-input-group>
@@ -17,17 +20,16 @@ export default {
   name: 'Users',
   data () {
     return {
-      token: ''
+      token: '',
+      users: []
     }
   },
   mounted () {
-    console.log('Application is running')
     this.$bvModal.show('modal-get-access-token')
   },
   methods: {
     take () {
       this.$bvModal.hide('modal-get-access-token')
-      console.log(this.token)
       this.axios
         .get('https://api.github.com/users?page=1&per_page=40', {
           headers: {
@@ -35,7 +37,10 @@ export default {
           }
         })
         .then(res => {
-          console.log(res.data)
+          res.data.forEach(element => {
+            this.users.push({userAvatar: element.avatar_url, userName: element.login, userUrl: element.html_url})
+          })
+          console.log(this.users)
         })
         .catch(error => {
           console.error(error)
