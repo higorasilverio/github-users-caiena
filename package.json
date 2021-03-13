@@ -11,7 +11,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "vue": "^2.5.2"
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "bootstrap-vue": "^2.21.2",
+    "vue": "^2.6.12",
+    "vue-axios": "^3.2.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

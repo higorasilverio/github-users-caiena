@@ -1,0 +1,66 @@
+<template>
+  <div class="users">
+    <b-modal id="modal-get-access-token" centered hide-footer hide-header no-close-on-esc no-close-on-backdrop>
+      <h5>Enter the access token:</h5>
+      <b-input-group>
+        <b-form-input type="password" placeholder="ACCESS TOKEN" v-model="token" @keypress.enter="take" />
+        <b-input-group-append is-text>
+          <b-icon icon="patch-check" @click="take"/>
+        </b-input-group-append>
+      </b-input-group>
+    </b-modal>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Users',
+  data () {
+    return {
+      token: ''
+    }
+  },
+  mounted () {
+    console.log('Application is running')
+    this.$bvModal.show('modal-get-access-token')
+  },
+  methods: {
+    take () {
+      this.$bvModal.hide('modal-get-access-token')
+      console.log(this.token)
+      this.axios
+        .get('https://api.github.com/users?page=1&per_page=40', {
+          headers: {
+            Authorization: `token ${this.token}`
+          }
+        })
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch(error => {
+          console.error(error)
+          this.$bvModal.show('modal-get-access-token')
+        })
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h1,
+h2 {
+  font-weight: normal;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+</style>
