@@ -1,7 +1,17 @@
 <template>
   <div class="users">
     <div>
-      <b-table v-if="users.length > 0" striped hover :items="users" />
+      <b-table v-if="users.length > 0" striped hover small :fields="fields" :items="users">
+        <template #cell(userAvatar)="data">
+          <img :src="data.value" alt="avatar">
+        </template>
+        <template #cell(userName)="data">
+          <i>{{ data.value }}</i>
+        </template>
+        <template #cell(userUrl)="data">
+          <a :href="data.value">Access</a>
+        </template>
+      </b-table>
     </div>
     <b-modal id="modal-get-access-token" centered hide-footer hide-header no-close-on-esc no-close-on-backdrop>
       <h5>Enter the access token:</h5>
@@ -21,7 +31,12 @@ export default {
   data () {
     return {
       token: '',
-      users: []
+      users: [],
+      fields: [
+        { key: 'userAvatar', label: 'Photo' },
+        { key: 'userName', label: 'User' },
+        { key: 'userUrl', label: "User's profile" }
+      ]
     }
   },
   mounted () {
@@ -31,7 +46,7 @@ export default {
     take () {
       this.$bvModal.hide('modal-get-access-token')
       this.axios
-        .get('https://api.github.com/users?page=1&per_page=40', {
+        .get('https://api.github.com/users?page=1&per_page=20', {
           headers: {
             Authorization: `token ${this.token}`
           }
@@ -40,7 +55,6 @@ export default {
           res.data.forEach(element => {
             this.users.push({userAvatar: element.avatar_url, userName: element.login, userUrl: element.html_url})
           })
-          console.log(this.users)
         })
         .catch(error => {
           console.error(error)
