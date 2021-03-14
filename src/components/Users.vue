@@ -3,7 +3,7 @@
     <div>
       <b-table v-if="users.length > 0" striped hover small :fields="fields" :items="users">
         <template #cell(userAvatar)="data">
-          <img :src="data.value" alt="avatar">
+          <b-img-lazy :src="data.value" v-bind="imgProps" alt="User avatar"></b-img-lazy>
         </template>
         <template #cell(userName)="data">
           <i>{{ data.value }}</i>
@@ -33,10 +33,19 @@ export default {
       token: '',
       users: [],
       fields: [
-        { key: 'userAvatar', label: 'Photo' },
+        { key: 'userAvatar', label: '' },
         { key: 'userName', label: 'User' },
         { key: 'userUrl', label: "User's profile" }
-      ]
+      ],
+      imgProps: {
+        left: true,
+        fluid: true,
+        blank: true,
+        rounded: 'circle',
+        blankColor: '#fff',
+        width: 100,
+        height: 100
+      }
     }
   },
   mounted () {
