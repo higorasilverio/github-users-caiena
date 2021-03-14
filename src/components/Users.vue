@@ -1,22 +1,5 @@
 <template>
   <div class="users">
-    <div style="margin: 0 25vw; border: 1px dashed blue;">
-      <b-table v-if="users.length > 0" striped hover small :fields="fields" :items="users">
-        <template #cell(userAvatar)="data">
-          <b-img-lazy :src="data.value" v-bind="imgProps" alt="User avatar"></b-img-lazy>
-        </template>
-        <template #cell(userName)="data">
-          <div style="height: 15vh !important; padding: 6vh 2vh;">
-            <span>{{ data.value }}</span>
-          </div>
-        </template>
-        <template #cell(userUrl)="data">
-          <div style="height: 15vh !important; padding: 6vh 2vh;">
-            <b-button block pill variant="outline-success" :href="data.value" target="_blank">Visit</b-button>
-          </div>
-        </template>
-      </b-table>
-    </div>
     <b-modal id="modal-get-access-token" centered hide-footer hide-header no-close-on-esc no-close-on-backdrop>
       <h5>Enter the access token:</h5>
       <b-input-group>
@@ -25,6 +8,19 @@
           <b-icon icon="patch-check" @click="take"/>
         </b-input-group-append>
       </b-input-group>
+    </b-modal>
+    <b-modal id="modal-show-github-user" size="xl" centered hide-footer hide-header no-close-on-esc no-close-on-backdrop>
+      <b-container fluid>
+        <b-row>
+          <b-col cols="6" v-for="user in users" :key="user.userName">
+            <b-row>
+              <b-col cols="2"><b-img-lazy :src="user.userAvatar" v-bind="imgProps" alt="User avatar"></b-img-lazy></b-col>
+              <b-col cols="3">{{user.userName}}</b-col>
+              <b-col><b-button block pill variant="outline-success" :href="user.userUrl" target="_blank">Visit</b-button></b-col>
+            </b-row>
+          </b-col>
+        </b-row>
+      </b-container>
     </b-modal>
   </div>
 </template>
@@ -47,8 +43,8 @@ export default {
         blank: true,
         rounded: 'circle',
         blankColor: '#fff',
-        width: 100,
-        height: 100
+        width: 40,
+        height: 40
       }
     }
   },
@@ -68,6 +64,7 @@ export default {
           res.data.forEach(element => {
             this.users.push({userAvatar: element.avatar_url, userName: element.login, userUrl: element.html_url})
           })
+          this.$bvModal.show('modal-show-github-user')
         })
         .catch(error => {
           console.error(error)
