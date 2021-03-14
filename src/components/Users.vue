@@ -1,15 +1,19 @@
 <template>
   <div class="users">
-    <div>
+    <div style="margin: 0 25vw; border: 1px dashed blue;">
       <b-table v-if="users.length > 0" striped hover small :fields="fields" :items="users">
         <template #cell(userAvatar)="data">
           <b-img-lazy :src="data.value" v-bind="imgProps" alt="User avatar"></b-img-lazy>
         </template>
         <template #cell(userName)="data">
-          <i>{{ data.value }}</i>
+          <div style="height: 15vh !important; padding: 6vh 2vh;">
+            <span>{{ data.value }}</span>
+          </div>
         </template>
         <template #cell(userUrl)="data">
-          <a :href="data.value">Access</a>
+          <div style="height: 15vh !important; padding: 6vh 2vh;">
+            <b-button block pill variant="outline-success" :href="data.value" target="_blank">Visit</b-button>
+          </div>
         </template>
       </b-table>
     </div>
@@ -87,8 +91,5 @@ ul {
 li {
   display: inline-block;
   margin: 0 10px;
-}
-a {
-  color: #42b983;
 }
 </style>
