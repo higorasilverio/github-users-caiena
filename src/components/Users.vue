@@ -20,6 +20,8 @@
             </b-row>
           </b-col>
         </b-row>
+        <label for="number">Page:</label>
+        <b-form-spinbutton id="number" v-model="pageNumber" inline min="1" max="120"/>
       </b-container>
     </b-modal>
   </div>
@@ -45,17 +47,24 @@ export default {
         blankColor: '#fff',
         width: 40,
         height: 40
-      }
+      },
+      pageNumber: 1
     }
   },
   mounted () {
     this.$bvModal.show('modal-get-access-token')
   },
+  watch: {
+    pageNumber: function () {
+      this.take()
+    }
+  },
   methods: {
     take () {
       this.$bvModal.hide('modal-get-access-token')
+      this.user = []
       this.axios
-        .get('https://api.github.com/users?page=1&per_page=20', {
+        .get(`https://api.github.com/users?since=${this.pageNumber - 1}&per_page=20`, {
           headers: {
             Authorization: `token ${this.token}`
           }
