@@ -10,17 +10,17 @@
       </b-input-group>
     </b-modal>
     <b-modal id="modal-show-github-user" size="xl" centered hide-footer hide-header no-close-on-esc no-close-on-backdrop>
-      <b-container fluid>
+      <b-container fluid v-if="showUserList">
         <b-row>
           <b-input-group class="mb-5">
             <b-input-group-prepend is-text>
-              <b-icon icon="search" @click="getUser" />
+              <b-icon icon="search" @click="getSingleUser" />
             </b-input-group-prepend>
-            <b-form-input type="search" placeholder="Search user" v-model="user" @keypress.enter="getUser" />
+            <b-form-input type="search" placeholder="Search user" v-model="user" @keypress.enter="getSingleUser" />
           </b-input-group>
         </b-row>
         <b-row>
-          <b-col cols="6" v-for="(user, index) in users" :key="index">
+          <b-col cols="6" v-for="user in users" :key="user.userId">
             <b-row>
               <b-col cols="2"><b-img-lazy :src="user.userAvatar" v-bind="imgProps" alt="User avatar"></b-img-lazy></b-col>
               <b-col cols="3">{{user.userName}}</b-col>
@@ -31,6 +31,16 @@
         <b-row class="mt-5">
           <label for="number">Page:</label>
           <b-form-spinbutton id="number" v-model="pageNumber" inline min="1" max="120"/>
+        </b-row>
+      </b-container>
+      <b-container fluid v-else>
+        <b-row>
+          <b-col cols="2"><b-img-lazy :src="singleUser.userAvatar" v-bind="imgProps" alt="User avatar"></b-img-lazy></b-col>
+          <b-col cols="3">{{singleUser.userName}}</b-col>
+          <b-col><b-button block pill variant="outline-success" :href="singleUser.userUrl" target="_blank">Visit</b-button></b-col>
+        </b-row>
+        <b-row>
+          <b-button block pill variant="outline-success" @click="showUserList = true">Return</b-button>
         </b-row>
       </b-container>
     </b-modal>
@@ -45,6 +55,7 @@ export default {
       token: '',
       users: [],
       user: '',
+      singleUser: {userId: 0, userAvatar: '', userName: '', userUrl: ''},
       fields: [
         { key: 'userAvatar', label: '' },
         { key: 'userName', label: 'User' },
@@ -59,7 +70,8 @@ export default {
         width: 40,
         height: 40
       },
-      pageNumber: 1
+      pageNumber: 1,
+      showUserList: true
     }
   },
   mounted () {
@@ -81,7 +93,7 @@ export default {
     },
     async getUsers () {
       await this.axios
-        .get(`https://api.github.com/users?since=${this.pageNumber - 1}&per_page=20`, {
+        .get(`https://api.github.com/users?since=${(this.pageNumber - 1) * 20}&per_page=20`, {
           headers: {
             Authorization: `token ${this.token}`,
             Accept: 'application/vnd.github.v3+json'
@@ -89,7 +101,7 @@ export default {
         })
         .then(response => {
           response.data.forEach(element => {
-            this.users.push({userAvatar: element.avatar_url, userName: element.login, userUrl: element.html_url})
+            this.users.push({userId: element.id, userAvatar: element.avatar_url, userName: element.login, userUrl: element.html_url})
           })
           return true
         })
@@ -98,7 +110,7 @@ export default {
           return false
         })
     },
-    async getUser () {
+    async getSingleUser () {
       await this.axios
         .get(`https://api.github.com/users/${this.user}`, {
           headers: {
@@ -107,7 +119,14 @@ export default {
           }
         })
         .then(response => {
-          console.log(response)
+          this.singleUser = {
+            userId: response.data.id,
+            userAvatar: response.data.avatar_url,
+            userName: response.data.name,
+            userUrl: response.data.html_url
+          }
+          this.showUserList = false
+          console.log(this.singleUser)
         })
         .catch(error => {
           console.error(error)
