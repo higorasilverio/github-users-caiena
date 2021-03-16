@@ -11,13 +11,15 @@
     </b-modal>
     <b-modal id="modal-show-github-user" size="xl" centered hide-footer hide-header no-close-on-esc no-close-on-backdrop>
       <b-container fluid v-if="showUserList">
-        <b-row>
-          <b-input-group class="mb-5">
-            <b-input-group-prepend is-text>
-              <b-icon icon="search" @click="getSingleUser" />
-            </b-input-group-prepend>
-            <b-form-input type="search" placeholder="Search user" v-model="user" @keypress.enter="getSingleUser" />
-          </b-input-group>
+        <b-row align-h="end">
+          <b-col sm="6" md="6" lg="4" xl="3">
+            <b-input-group class="mb-3">
+              <b-input-group-prepend is-text>
+                <b-icon icon="search" @click="getSingleUser" />
+              </b-input-group-prepend>
+              <b-form-input type="search" placeholder="Search user" v-model="user" @keypress.enter="getSingleUser" />
+            </b-input-group>
+          </b-col>
         </b-row>
         <b-row>
           <b-col cols="6" v-for="user in users" :key="user.userId">
@@ -28,9 +30,11 @@
             </b-row>
           </b-col>
         </b-row>
-        <b-row class="mt-5">
-          <label for="number">Page:</label>
-          <b-form-spinbutton id="number" v-model="pageNumber" inline min="1" max="120"/>
+        <b-row class="mt-2 mr-1" align-h="end">
+          <div class="flex-pagination-div">
+            <span>Page</span>
+            <b-form-spinbutton id="number" v-model="pageNumber" inline min="1" max="120"/>
+          </div>
         </b-row>
       </b-container>
       <b-container fluid v-else>
@@ -138,16 +142,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
+.flex-pagination-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
