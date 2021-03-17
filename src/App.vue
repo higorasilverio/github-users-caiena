@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <Users/>
+    <Home/>
   </div>
 </template>
 
 <script>
-import Users from './components/Users'
+import Home from './components/Home'
 
 export default {
   name: 'App',
   components: {
-    Users
+    Home
   }
 }
 </script>

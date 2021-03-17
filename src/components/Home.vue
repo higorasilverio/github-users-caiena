@@ -1,5 +1,5 @@
 <template>
-  <div class="users">
+  <div class="home">
     <b-modal id="modal-get-access-token" centered hide-footer hide-header no-close-on-esc no-close-on-backdrop>
       <h5>Enter the access token:</h5>
       <b-input-group>
@@ -24,9 +24,7 @@
         <b-row>
           <b-col cols="6" v-for="user in users" :key="user.userId">
             <b-row>
-              <b-col cols="2"><b-img-lazy :src="user.userAvatar" v-bind="imgProps" alt="User avatar"></b-img-lazy></b-col>
-              <b-col cols="3">{{user.userName}}</b-col>
-              <b-col><b-button block pill variant="outline-success" :href="user.userUrl" target="_blank">Visit</b-button></b-col>
+              <b-col><User :userName="user.userName" :userAvatar="user.userAvatar" :userUrl="user.userUrl" /></b-col>
             </b-row>
           </b-col>
         </b-row>
@@ -52,8 +50,13 @@
 </template>
 
 <script>
+import User from '../components/User'
+
 export default {
-  name: 'Users',
+  name: 'Home',
+  components: {
+    User
+  },
   data () {
     return {
       token: '',
@@ -65,15 +68,6 @@ export default {
         { key: 'userName', label: 'User' },
         { key: 'userUrl', label: "User's profile" }
       ],
-      imgProps: {
-        left: true,
-        fluid: true,
-        blank: true,
-        rounded: 'circle',
-        blankColor: '#fff',
-        width: 40,
-        height: 40
-      },
       pageNumber: 1,
       showUserList: true
     }
