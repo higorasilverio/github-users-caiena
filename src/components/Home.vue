@@ -37,9 +37,7 @@
       </b-container>
       <b-container fluid v-else>
         <b-row>
-          <b-col cols="2"><b-img-lazy :src="singleUser.userAvatar" v-bind="imgProps" alt="User avatar"></b-img-lazy></b-col>
-          <b-col cols="3">{{singleUser.userName}}</b-col>
-          <b-col><b-button block pill variant="outline-success" :href="singleUser.userUrl" target="_blank">Visit</b-button></b-col>
+          <b-col><User :userName="singleUser.userName" :userAvatar="singleUser.userAvatar" :userUrl="singleUser.userUrl" /></b-col>
         </b-row>
         <b-row>
           <b-button block pill variant="outline-success" @click="showUserList = true">Return</b-button>
