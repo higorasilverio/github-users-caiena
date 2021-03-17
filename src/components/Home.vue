@@ -37,8 +37,10 @@
         <b-row>
           <b-col><User :userName="singleUser.userName" :userAvatar="singleUser.userAvatar" :userUrl="singleUser.userUrl" /></b-col>
         </b-row>
-        <b-row>
-          <b-button block pill variant="outline-success" @click="showUserList = true">Return</b-button>
+        <b-row align-h="center">
+          <b-button variant="outline-dark" @click="showUserList = true">
+            <span class="button-return"><b-icon icon="arrow-return-left" /> Return</span>
+          </b-button>
         </b-row>
       </b-container>
     </b-modal>
@@ -136,5 +138,9 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.button-return {
+  font-size: 1.3em;
+  margin-bottom: .2em;
 }
 </style>
