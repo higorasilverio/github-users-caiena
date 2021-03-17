@@ -23,9 +23,7 @@
         </b-row>
         <b-row>
           <b-col cols="6" v-for="user in users" :key="user.userId">
-            <b-row>
-              <b-col><User :userName="user.userName" :userAvatar="user.userAvatar" :userUrl="user.userUrl" /></b-col>
-            </b-row>
+            <User :userName="user.userName" :userAvatar="user.userAvatar" :userUrl="user.userUrl" />
           </b-col>
         </b-row>
         <b-row class="mt-2 mr-1" align-h="end">

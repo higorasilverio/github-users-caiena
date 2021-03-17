@@ -1,9 +1,11 @@
 <template>
-  <div class="user">
-    <b-col cols="2"><b-img-lazy :src="userAvatar" v-bind="imgProps" alt="User avatar" /></b-col>
-    <b-col cols="3">{{ userName }}</b-col>
-    <b-col><b-button block pill variant="outline-success" :href="userUrl" target="_blank" >Visit</b-button></b-col>
-  </div>
+  <b-row class="user">
+    <b-col cols="3"><b-img-lazy :src="userAvatar" v-bind="imgProps" alt="User avatar"></b-img-lazy></b-col>
+		<b-col cols="8">
+			<b-row><span>{{ userName }}</span></b-row>
+			<b-row><a :href="userUrl" target="_blank">Visit Profile</a></b-row>
+		</b-col>
+  </b-row>
 </template>
 
 <script>
@@ -18,18 +20,15 @@ export default {
         blank: true,
         rounded: 'circle',
         blankColor: '#fff',
-        width: 40,
-        height: 40
+        width: 50,
+        height: 50
       }
-    }
-  },
-  methods: {
-    initiate () {
-      console.log('User initiated')
     }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+
+</style>
