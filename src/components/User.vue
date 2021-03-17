@@ -1,15 +1,17 @@
 <template>
   <div class="wrapper">
-  <div id="card" class="card">
+  <div class="card">
     <div class="card-info">
       <div class="card-image">
         <img :src="userAvatar" class="card-avatar card-avatar--circle">
       </div>
       <div class="card-fields">
-        <h3 class="card-name">{{ userName }}</h3>
+        <h5 class="card-name">{{ userName }}</h5>
       </div>
       <div class="card-fields">
-        <b-button :href="userUrl" target="_blank"><span class="card-icom"><b-icon icon="github"></b-icon></span></b-button>
+        <b-button variant="outline-dark" :href="userUrl" target="_blank">
+          <span class="card-icom"><b-icon icon="github" /> Profile</span>
+        </b-button>
       </div>
     </div>
   </div>
@@ -33,7 +35,7 @@ export default {
   box-shadow: 0 0 1.7em 0 rgba(#abbaab, .55);
   display: flex;
   flex-direction: column;
-  max-width: 18em;
+  max-width: 18.5em;
   position: relative;
   width: 100%;
 }
@@ -46,6 +48,8 @@ export default {
 }
 
 .card-image {
+  display: flex;
+  justify-content: center;
   margin: auto;
   max-width: ((128px/16px) * 1em);
 }
@@ -53,7 +57,7 @@ export default {
 .card-avatar {
   display: block;
   height: auto;
-  width: 100%;
+  width: 50%;
 }
 
 .card-avatar--circle {
@@ -61,12 +65,11 @@ export default {
 }
 
 .card-name {
-  font-size: 1.8em;
   margin-bottom: .2em;
 }
 
 .card-icom {
-  font-size: 1.5em;
+  font-size: 1.3em;
   margin-bottom: .2em;
 }
 
@@ -86,8 +89,10 @@ html {
 .wrapper {
   align-items: center;
   display: flex;
+  border-radius: .3em;
+  margin: .5em;
   justify-content: center;
-  height: 55vh;
+  height: 38vh;
   background: radial-gradient(circle, #ffffff, #abbaab);
 }
 </style>
