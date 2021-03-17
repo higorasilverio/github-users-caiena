@@ -10,7 +10,7 @@
       </div>
       <div class="card-fields">
         <b-button variant="outline-dark" :href="userUrl" target="_blank">
-          <span class="card-icom"><b-icon icon="github" /> Profile</span>
+          <span class="card-icom"><b-icon icon="github" /></span><span class="card-span"> Profile</span>
         </b-button>
       </div>
     </div>
@@ -66,9 +66,10 @@ export default {
 
 .card-name {
   margin-bottom: .2em;
+  font-size: 1.5em;
 }
 
-.card-icom {
+.card-icom, .card-span {
   font-size: 1.3em;
   margin-bottom: .2em;
 }
@@ -92,7 +93,54 @@ html {
   border-radius: .3em;
   margin: .5em;
   justify-content: center;
-  height: 38vh;
+  height: 40vh;
   background: radial-gradient(circle, #ffffff, #abbaab);
+}
+@media (max-width: 990px){
+  .card-avatar {
+    width: 70%;
+  }
+  .card-name {
+    font-size: 1.3em;
+  }
+}
+@media (max-width: 550px){
+  .card-avatar {
+    width: 100%;
+  }
+  .card-span {
+    display: none;
+  }
+  .card-icom {
+    margin: 0 2vh;
+  }
+  .card-name {
+    font-size: 1em;
+  }
+  .wrapper {
+    margin: .1em;
+  }
+}
+@media (max-width: 450px){
+  .wrapper {
+    height: 30vh;
+  }
+  .card-name {
+    font-size: .8em;
+  }
+}
+@media (max-width: 300px){
+  .wrapper {
+    height: 25vh;
+  }
+  .card-icom {
+    margin: 0;
+  }
+  .card-avatar {
+    width: 8vh;
+  }
+  .card-name {
+    font-size: .60em;
+  }
 }
 </style>
