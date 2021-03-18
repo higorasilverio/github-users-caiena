@@ -30,7 +30,7 @@ export default {
 .card {
   align-items: center;
   background: #fff;
-  border-radius: .3em;
+  border-radius: 1em;
   border: .0625em solid mix(#fff, #abbaab, 20%);
   box-shadow: 0 0 1.7em 0 rgba(#abbaab, .55);
   display: flex;
@@ -90,11 +90,11 @@ html {
 .wrapper {
   align-items: center;
   display: flex;
-  border-radius: .3em;
+  border-radius: 1em;
   margin: .5em;
   justify-content: center;
   height: 40vh;
-  background: radial-gradient(circle, #ffffff, #abbaab);
+  background: radial-gradient(circle, #ffffff, #000);
 }
 @media (max-width: 990px){
   .card-avatar {
