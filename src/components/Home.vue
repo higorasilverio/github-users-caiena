@@ -125,8 +125,7 @@ export default {
           this.$bvModal.show('modal-show-github-user')
           this.charge = false
         })
-        .catch(error => {
-          console.error(error)
+        .catch(() => {
           this.stateToken = false
           this.$bvModal.show('modal-get-access-token')
           this.charge = false
@@ -152,8 +151,7 @@ export default {
           this.$bvModal.show('modal-show-single-user')
           this.charge = false
         })
-        .catch(error => {
-          console.error(error)
+        .catch(() => {
           this.$bvModal.show('modal-show-github-user')
           this.stateUserName = false
           this.charge = false
