@@ -25,7 +25,7 @@
                 </b-input-group-prepend>
                 <b-form-input :state="stateUserName" type="search" placeholder="Search user"
                   v-model="user" @keypress.enter="getSingleUser" @focus="stateUserName = null"
-                  aria-describedby="input-live-feedback-user"/>
+                  @keydown="stateUserName = null" aria-describedby="input-live-feedback-user"/>
                 <b-form-invalid-feedback id="input-live-feedback-user">
                   User not found
                 </b-form-invalid-feedback>
