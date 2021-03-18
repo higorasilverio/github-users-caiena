@@ -37,9 +37,9 @@
     <b-modal id="modal-show-single-user" centered hide-footer hide-header no-close-on-esc no-close-on-backdrop>
       <b-container fluid>
         <b-row>
-          <b-col>{{singleUser.userName}}</b-col>
-          <b-col><a :href="singleUser.userUrl"></a></b-col>
-          <b-col><b-img width="75" height="75" class="m1" :src="singleUser.userAvatar"></b-img></b-col>
+          <b-col>
+            <SingleUser :userName="singleUser.userName" :userAvatar="singleUser.userAvatar" :userUrl="singleUser.userUrl" />
+          </b-col>
         </b-row>
         <b-row align-h="center">
           <b-button variant="outline-dark" @click="closeSingleUser">
@@ -53,11 +53,13 @@
 
 <script>
 import User from '../components/User'
+import SingleUser from '../components/SingleUser'
 
 export default {
   name: 'Home',
   components: {
-    User
+    User,
+    SingleUser
   },
   data () {
     return {
