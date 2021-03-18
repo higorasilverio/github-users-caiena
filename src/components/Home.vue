@@ -10,7 +10,7 @@
       </b-input-group>
     </b-modal>
     <b-modal id="modal-show-github-user" size="xl" centered hide-footer hide-header no-close-on-esc no-close-on-backdrop>
-      <b-container fluid v-if="showUserList">
+      <b-container fluid>
         <b-row align-h="end">
           <b-col sm="6" md="6" lg="4" xl="3">
             <b-input-group class="mb-3">
@@ -33,12 +33,16 @@
           </div>
         </b-row>
       </b-container>
-      <b-container fluid v-else>
+    </b-modal>
+    <b-modal id="modal-show-single-user" centered hide-footer hide-header no-close-on-esc no-close-on-backdrop>
+      <b-container fluid>
         <b-row>
-          <b-col><User :userName="singleUser.userName" :userAvatar="singleUser.userAvatar" :userUrl="singleUser.userUrl" /></b-col>
+          <b-col>{{singleUser.userName}}</b-col>
+          <b-col><a :href="singleUser.userUrl"></a></b-col>
+          <b-col><b-img width="75" height="75" class="m1" :src="singleUser.userAvatar"></b-img></b-col>
         </b-row>
         <b-row align-h="center">
-          <b-button variant="outline-dark" @click="showUserList = true">
+          <b-button variant="outline-dark" @click="closeSingleUser">
             <span class="button-return"><b-icon icon="arrow-return-left" /> Return</span>
           </b-button>
         </b-row>
@@ -66,8 +70,7 @@ export default {
         { key: 'userName', label: 'User' },
         { key: 'userUrl', label: "User's profile" }
       ],
-      pageNumber: 1,
-      showUserList: true
+      pageNumber: 1
     }
   },
   mounted () {
@@ -121,12 +124,16 @@ export default {
             userName: response.data.name,
             userUrl: response.data.html_url
           }
-          this.showUserList = false
-          console.log(this.singleUser)
+          this.$bvModal.hide('modal-show-github-user')
+          this.$bvModal.show('modal-show-single-user')
         })
         .catch(error => {
           console.error(error)
         })
+    },
+    closeSingleUser () {
+      this.$bvModal.hide('modal-show-single-user')
+      this.$bvModal.show('modal-show-github-user')
     }
   }
 }
